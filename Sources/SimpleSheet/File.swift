@@ -25,6 +25,9 @@ class HTTPProxy {
             request.httpMethod = method == .post ? "POST" : "GET"
             let (data, _) = try await client.data(for: request)
 
+            print("  > " + url.absoluteString)
+            print("  < " + String(data: data, encoding: .utf8)!)
+
             return try JSONDecoder().decode(T.self, from: data)
 
         }
@@ -38,6 +41,9 @@ class HTTPProxy {
             request.allHTTPHeaderFields = headers
             request.httpMethod = method == .post ? "POST" : "GET"
             let (data, _) = try await client.data(for: request)
+
+            print("  > " + url.absoluteString)
+            print("  < " + String(data: data, encoding: .utf8)!)
 
             return try JSONDecoder().decode(T.self, from: data)
 
