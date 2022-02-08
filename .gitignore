@@ -2,3 +2,5 @@ Tests/QueenfisherTests/Keys/*
 .build
 .vscode
 .swiftpm
+.DS_Store
+.swiftpm/xcode/xcshareddata/xcschemes/QueenfisherUltra.xcscheme
