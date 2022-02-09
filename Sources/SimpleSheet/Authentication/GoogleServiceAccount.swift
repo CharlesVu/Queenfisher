@@ -62,7 +62,7 @@ public class GoogleServiceAccount: Codable, AccessTokenFactory {
             "assertion": signed,
         ]
 
-        let token: SAToken = try await HTTPProxy.execute(on: client, url: tokenUri, headers: [:], body: body, method: .post)
+        let token: SAToken = try await HTTPProxy.execute(on: client, url: tokenUri, headers: ["Content-Type": "application/json"], parameters: [:], body: body, method: .post)
 
         return AccessToken(
             accessToken: token.accessToken,

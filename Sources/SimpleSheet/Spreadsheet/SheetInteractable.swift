@@ -34,7 +34,7 @@ extension SheetInteractable {
         let body = Sheet.ValuesRange(dimension: dimension, range: range, values: data)
         let headers = try await headers()
 
-        return try await HTTPProxy.execute(on: client, url: url, headers: headers, body: body, method: .get)
+        return try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, body: body, method: .get)
     }
 
     /// Read a sheet
@@ -51,7 +51,7 @@ extension SheetInteractable {
         }
         let headers = try await headers()
 
-        return try await HTTPProxy.execute(on: client, url: url, headers: headers, method: .get)
+        return try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, method: .get)
     }
 
     public func batchUpdate(_ operation: Spreadsheet.Operation) async throws -> Spreadsheet.UpdateResponse {
@@ -61,7 +61,7 @@ extension SheetInteractable {
     public func batchUpdate(operations: Spreadsheet.Operations) async throws -> Spreadsheet.UpdateResponse {
         let url = sheetsApiUrl.appendingPathComponent(spreadsheetId + ":batchUpdate")
         let headers = try await headers()
-        return try await HTTPProxy.execute(on: client, url: url, headers: headers, body: operations, method: .post)
+        return try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, body: operations,  method: .post)
     }
 
     internal func headers() async throws -> [String: String] {

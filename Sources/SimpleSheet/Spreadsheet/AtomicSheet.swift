@@ -198,7 +198,7 @@ public class AtomicSheet: SheetInteractable {
         ]
         let url = comps.url!
         let headers = try await headers()
-        let spreadSheet: Spreadsheet = try await HTTPProxy.execute(on: client, url: url, headers: headers, method: .get)
+        let spreadSheet: Spreadsheet = try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: [:], method: .get)
         var sheet = spreadSheet.sheets.first
         if sheet == nil {
             let result = try await self.batchUpdate(.addSheet(title: self.sheetTitle, grid: nil))

@@ -33,7 +33,7 @@ public class Spreadsheet: SheetInteractable, Decodable {
     ) async throws -> Spreadsheet {
         let url = sheetsApiUrl.appendingPathComponent(spreadsheetId)
         let headers = try await authenticator.authenticationHeader(scope: .sheets, client: client)
-        let spreadsheet: Spreadsheet = try await HTTPProxy.execute(on: client, url: url, headers: headers, method: .get)
+        let spreadsheet: Spreadsheet = try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, method: .get)
 
         spreadsheet.authenticator = authenticator
         spreadsheet.client = client

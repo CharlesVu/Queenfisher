@@ -42,7 +42,7 @@ public struct GoogleOAuthClient: Codable, AccessTokenFactory {
             redirectUri: web.redirectUris.first!,
             grantType: .authorizationCode)
 
-        let token: AccessToken = try await HTTPProxy.execute(on: client, url: oAuthApiUrl, headers: [:], body: req, method: .post)
+        let token: AccessToken = try await HTTPProxy.execute(on: client, url: oAuthApiUrl, headers: [:], parameters: [:], body: req, method: .post)
 
         return token.with(expiry: Date().addingTimeInterval(token.expiryDate.timeIntervalSince1970))
     }
@@ -58,7 +58,7 @@ public struct GoogleOAuthClient: Codable, AccessTokenFactory {
             clientSecret: self.web.clientSecret,
             redirectUri: self.web.redirectUris.first!,
             grantType: .refreshToken)
-        return try await HTTPProxy.execute(on: client, url: oAuthApiUrl, headers:[:], body: req, method: .post)
+        return try await HTTPProxy.execute(on: client, url: oAuthApiUrl, headers:[:], parameters: [:], body: req, method: .post)
     }
 
     public func factory(usingAccessToken token: AccessToken) throws -> AuthenticationFactory {

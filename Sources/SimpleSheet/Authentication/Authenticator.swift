@@ -25,7 +25,7 @@ extension Authenticator {
         [String: String]
     ) {
         let token = try await authenticate(scope: scope, client: client)
-        return [token.tokenType: token.accessToken]
+        return ["access_token": token.accessToken]
     }
 }
 
