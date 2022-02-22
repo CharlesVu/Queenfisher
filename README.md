@@ -1,11 +1,10 @@
-# Queenfisher - Cross-Platform Google APIs for Swift built with NIO
+# Queenfisher - Cross-Platform Google APIs for Swift built without NIO
 
 ## What's Done:
 
 - [x] Authenticating using OAuth & using refresh tokens to continually fetch new access tokens
 - [x] Authenticating using a service account
-- [x] **GMail** -- reading, modifying, fetching, sending & replying to emails
-- [x] **Spreadsheets** -- reading, modifying & writing to sheets 
+- [x] **Spreadsheets** -- reading
 - [x] Synchronize & maintain a database on Sheets
 
 ## Installing
@@ -16,7 +15,7 @@
 	...
 	dependencies: [
 		// Dependencies declare other packages that this package depends on.
-		.package(url: "https://github.com/adiwajshing/Queenfisher.git", from: "0.1.0")
+		.package(url: "https://github.com/charlesvu/Queenfisher.git", from: "0.1.0")
 	],
 	targets: [
 		.target(name: "MyTarget", dependencies: ["Queenfisher", ...])
