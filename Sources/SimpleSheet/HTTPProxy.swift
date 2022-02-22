@@ -50,6 +50,10 @@ class HTTPProxy {
             var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
 
             for (key, value) in parameters {
+                if components?.queryItems == nil {
+                    components?.queryItems = []
+                }
+
                 components?.queryItems?.append(.init(name: key, value: value))
             }
 
@@ -58,7 +62,7 @@ class HTTPProxy {
             request.httpBody = try defaultEncoder.encode(body)
             request.httpMethod = method == .post ? "POST" : "GET"
 
-//            print("  > \(request.httpMethod!) " + url.absoluteString)
+//            print("  > \(request.httpMethod!) " + components!.url!.absoluteString)
 //            print("  > \(headers)")
 //            if let httpBody = request.httpBody {
 //                print(String(data: httpBody, encoding: .utf8)!)
@@ -93,7 +97,7 @@ class HTTPProxy {
             var request = URLRequest(url: components!.url!)
             request.allHTTPHeaderFields = headers
             request.httpMethod = method == .post ? "POST" : "GET"
-//            print("  > \(request.httpMethod!) " + url.absoluteString)
+//            print("  > \(request.httpMethod!) " + components!.url!.absoluteString)
 //            print("  > \(headers)")
 //            if let httpBody = request.httpBody {
 //                print(String(data: httpBody, encoding: .utf8)!)

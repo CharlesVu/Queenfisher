@@ -15,7 +15,13 @@ public protocol SheetInteractable {
     var client: URLSession! { get }
 }
 
+public enum Dimension: String {
+    case row = "ROWS"
+    case column = "COLUMNS"
+}
+
 extension SheetInteractable {
+
 
     public var url: URL { sheetsApiUrl.appendingPathComponent(spreadsheetId) }
 
@@ -32,14 +38,15 @@ extension SheetInteractable {
         url = comps.url!
 
         let body = Sheet.ValuesRange(dimension: dimension, range: range, values: data)
-        let headers = try await headers()
+        let queryParameters = try await queryParameters()
 
-        return try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, body: body, method: .get)
+        return try await HTTPProxy.execute(on: client, url: url, headers: [:], parameters: queryParameters, body: body, method: .get)
     }
 
     /// Read a sheet
     public func read(
         sheetID: String? = nil,
+        dimension: Dimension,
         range: (from: Sheet.Location, to: Sheet.Location)? = nil
     ) async throws -> Sheet.ValuesRange {
         var url = self.url.appendingPathComponent("values")
@@ -49,9 +56,9 @@ extension SheetInteractable {
             }
             url.appendPathComponent(sheetComp)
         }
-        let headers = try await headers()
-
-        return try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, method: .get)
+        var headers = try await queryParameters()
+        headers["majorDimension"] = dimension.rawValue
+        return try await HTTPProxy.execute(on: client, url: url, headers: [:], parameters: headers, method: .get)
     }
 
     public func batchUpdate(_ operation: Spreadsheet.Operation) async throws -> Spreadsheet.UpdateResponse {
@@ -60,11 +67,11 @@ extension SheetInteractable {
 
     public func batchUpdate(operations: Spreadsheet.Operations) async throws -> Spreadsheet.UpdateResponse {
         let url = sheetsApiUrl.appendingPathComponent(spreadsheetId + ":batchUpdate")
-        let headers = try await headers()
-        return try await HTTPProxy.execute(on: client, url: url, headers: headers, parameters: headers, body: operations,  method: .post)
+        let queryParameters = try await queryParameters()
+        return try await HTTPProxy.execute(on: client, url: url, headers: [:], parameters: queryParameters, body: operations,  method: .post)
     }
 
-    internal func headers() async throws -> [String: String] {
+    internal func queryParameters() async throws -> [String: String] {
         return try await authenticator!.authenticationHeader(scope: .sheets, client: client!)
     }
 }
