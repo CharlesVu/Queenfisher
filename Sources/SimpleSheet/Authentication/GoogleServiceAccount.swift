@@ -7,6 +7,9 @@
 
 import Foundation
 import JWTKit
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Google Service Account to use for authentication. See https://developers.google.com/identity/protocols/oauth2/service-account
 public class GoogleServiceAccount: Codable, AccessTokenFactory {

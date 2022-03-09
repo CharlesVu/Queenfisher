@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 let oAuthApiUrl = URL(string: "https://oauth2.googleapis.com/token")!
 

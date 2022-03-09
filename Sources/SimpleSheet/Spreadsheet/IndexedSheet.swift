@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Methods to upload & maintain a keyed database in a Google Sheet in O(log N) time
 public class IndexedSheet<K: Comparable & Hashable>: AtomicSheet {

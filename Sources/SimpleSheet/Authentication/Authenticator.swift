@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Abstract protocol that offers a way to provide a AccessToken
 public protocol Authenticator {

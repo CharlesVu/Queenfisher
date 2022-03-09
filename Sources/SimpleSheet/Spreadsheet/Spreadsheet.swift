@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Class to read & write to a google spreadsheet
 public class Spreadsheet: SheetInteractable, Decodable {

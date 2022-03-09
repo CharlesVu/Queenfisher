@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 let sheetsApiUrl = URL(string: "https://sheets.googleapis.com/v4/spreadsheets/")!
 /// Generic Spreadsheet with functions to batch update
