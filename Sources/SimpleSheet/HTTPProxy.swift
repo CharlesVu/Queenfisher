@@ -113,7 +113,14 @@ class HTTPProxy {
 //            }
 //            print("  > ")
 
-            let (data, _) = try await client.data(for: request)
+            let data: Data = await withCheckedContinuation { continuation in
+                URLSession.shared.dataTask(with: request) { data, _, _ in
+                    guard let data = data else {
+                        fatalError()
+                    }
+                    continuation.resume(returning: data)
+                }.resume()
+            }
 
 //            print("  < ")
 //            print(String(data: data, encoding: .utf8)!)
